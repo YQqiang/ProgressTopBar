@@ -46,7 +46,7 @@
     CGFloat lineHeight = 3;
     CGFloat width = CGRectGetWidth(self.frame);
     CGFloat radius = (width - 2 * space) * 0.16;
-    CGFloat controlPointY = 3;
+    CGFloat controlPointY = 3.2;
     CGFloat startAngle = M_PI * 0.2;
     CGFloat endAngle = M_PI - startAngle;
     
@@ -100,15 +100,15 @@
     }
     // 路径
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width * 0.5, lineHeight) radius: radius startAngle:startAngle endAngle:endAngle clockwise:YES];
-    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.25 + space, lineHeight) controlPoint:CGPointMake(width * 0.3, controlPointY)];
+    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.25 + space, lineHeight) controlPoint:CGPointMake(width * 0.32, controlPointY)];
     [path addLineToPoint:CGPointMake(space, lineHeight)];
     [path addLineToPoint:CGPointMake(space, 0)];
     [path addLineToPoint:CGPointMake(width - space, 0)];
     [path addLineToPoint:CGPointMake(width - space, lineHeight)];
     [path addLineToPoint:CGPointMake( width - (width - 2 * space) * 0.25 - space, lineHeight)];
-    CGFloat endX = cos(startAngle) * radius + (width * 0.5);
-    CGFloat endY = sin(startAngle) * radius + lineHeight;
-    [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.7, controlPointY)];
+    double endX = cos(startAngle) * radius + (width * 0.5);
+    double endY = sin(startAngle) * radius + lineHeight;
+    [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.68, controlPointY)];
     
     // 绘制路径图层
     CAShapeLayer *backLayer = [CAShapeLayer layer];
@@ -146,7 +146,7 @@
     [gradientLayer setMask:backLayer];
     
     // 黄色圆圈(标识正在处理)
-    if (self.processState == ProcessingTrialing || self.processState == ProcessingMiddle || self.processState == ProcessingLeading || self.processState == ProcessLastDone) {
+    if (self.processState == ProcessingTrialing || self.processState == ProcessingMiddle || self.processState == ProcessingLeading || self.processState == ProcessLastDone || self.processState == ProcessFirtDoing) {
         CGFloat cycleRadius = 3;
         UIView *cycleView = [[UIView alloc] init];
         cycleView.backgroundColor = RGB(247, 141, 97);
