@@ -142,7 +142,7 @@
     if (colors.count == 2) {
         gradientLayer.locations = @[@0.7];
     } else if (colors.count == 3) {
-        gradientLayer.locations = @[@0.1, @0.7];
+        gradientLayer.locations = @[@0, @0.5];
     }
     [self.layer addSublayer:gradientLayer];
     [gradientLayer setMask:backLayer];
