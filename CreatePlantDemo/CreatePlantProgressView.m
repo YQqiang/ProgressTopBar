@@ -33,12 +33,23 @@
         if (i == self.progressValueType - 1) {
             processState = ProcessedTrialing;
         } else if (i < self.progressValueType) {
-            processState = ProcessedLeading;
+            processState = ProcessedMiddle;
         } else if (i == self.progressValueType) {
             processState = ProcessingMiddle;
         } else {
             processState = UnProcessState;
         }
+        
+        if (i == 0 && self.progressValueType != ProgressTypeWith40) {
+            processState = ProcessedLeading;
+        }
+        if (i == 0 && self.progressValueType == ProgressTypeWith40) {
+            processState = ProcessFirtDone;
+        }
+        if (i == 4) {
+            processState = UnProcessRightRornerRadiusState;
+        }
+        
         if (self.progressValueType == ProgressTypeWith20 && i == 0) {
             processState = ProcessFirtDoing;
         }

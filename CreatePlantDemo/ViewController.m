@@ -29,7 +29,7 @@
     [self.view addSubview:progressView2];
     CreatePlantProgressItme *progressView3 = [[CreatePlantProgressItme alloc] initWithFrame:CGRectMake(x + 3 * width, 100, width, 40) processState:UnProcessState processValue:@"80%"];
     [self.view addSubview:progressView3];
-    CreatePlantProgressItme *progressView4 = [[CreatePlantProgressItme alloc] initWithFrame:CGRectMake(x + 4 * width, 100, width, 40) processState:UnProcessState processValue:@"100%"];
+    CreatePlantProgressItme *progressView4 = [[CreatePlantProgressItme alloc] initWithFrame:CGRectMake(x + 4 * width, 100, width, 40) processState:UnProcessRightRornerRadiusState processValue:@"100%"];
     [self.view addSubview:progressView4];
     
     CreatePlantProgressView *pView1 = [[CreatePlantProgressView alloc] initWithFrame:CGRectMake(10, 180, width * 5 - 2 * x, 40) progressValueType:ProgressTypeWith20];

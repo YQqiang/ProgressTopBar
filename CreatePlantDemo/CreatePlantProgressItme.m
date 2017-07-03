@@ -42,7 +42,7 @@
 
 - (void)createUI {
     self.backgroundColor = [UIColor whiteColor];
-    CGFloat space = 0;
+    CGFloat space = 4;
     CGFloat lineHeight = 3;
     CGFloat width = CGRectGetWidth(self.frame);
     CGFloat radius = (width - 2 * space) * 0.16;
@@ -64,6 +64,9 @@
         case UnProcessState:
             overalColor = unDoColor;
             break;
+        case UnProcessRightRornerRadiusState:
+            overalColor = unDoColor;
+            break;
         case ProcessingLeading:
             overalColor = doingColor;
             leadingGradientColor = doingColor;
@@ -76,6 +79,10 @@
             break;
         case ProcessingTrialing:
             overalColor = doingColor;
+            break;
+        case ProcessFirtDone:
+            overalColor = doneColor;
+            trailingGradientColor = lightDoingColor;
             break;
         case ProcessedLeading:
             overalColor = doneColor;
@@ -100,22 +107,34 @@
     }
     // 路径
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width * 0.5, lineHeight) radius: radius startAngle:startAngle endAngle:endAngle clockwise:YES];
-    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.2 + space, lineHeight) controlPoint:CGPointMake(width * 0.3, controlPointY)];
-    [path addLineToPoint:CGPointMake(space, lineHeight)];
-    [path addLineToPoint:CGPointMake(space, 0)];
-    [path addLineToPoint:CGPointMake(width - space, 0)];
-    [path addLineToPoint:CGPointMake(width - space, lineHeight)];
-    [path addLineToPoint:CGPointMake( width - (width - 2 * space) * 0.2 - space, lineHeight)];
+    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.185 + space, lineHeight) controlPoint:CGPointMake(width * 0.3, controlPointY)];
+    // 左圆角
+    if (self.processState == ProcessFirtDoing || self.processState == ProcessedLeading || self.processState == ProcessFirtDone) {
+        [path addLineToPoint:CGPointMake(space, lineHeight)];
+        [path addQuadCurveToPoint:CGPointMake(space, 0) controlPoint:CGPointMake(0 - space, lineHeight * 0.5)];
+    } else {
+        [path addLineToPoint:CGPointMake(0, lineHeight)];
+        [path addLineToPoint:CGPointMake(0, 0)];
+    }
+    // 右圆角
+    if (self.processState == ProcessLastDone || self.processState == UnProcessRightRornerRadiusState) {
+        [path addLineToPoint:CGPointMake(width - space, 0)];
+        [path addQuadCurveToPoint:CGPointMake(width - space, lineHeight) controlPoint:CGPointMake(width + space, lineHeight * 0.5)];
+    } else {
+        [path addLineToPoint:CGPointMake(width - 0, 0)];
+        [path addLineToPoint:CGPointMake(width - 0, lineHeight)];
+    }
+    [path addLineToPoint:CGPointMake( width - (width - 2 * space) * 0.185 - space, lineHeight)];
     double endX = cos(startAngle) * radius + (width * 0.5);
     double endY = sin(startAngle) * radius + lineHeight;
     [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.7, controlPointY)];
-    
+//    path.lineWidth = 10;
     // 绘制路径图层
     CAShapeLayer *backLayer = [CAShapeLayer layer];
     backLayer.frame = self.bounds;
     backLayer.fillColor =  overalColor.CGColor;
     backLayer.strokeColor  = overalColor.CGColor;
-    backLayer.lineWidth = 2;
+//    backLayer.lineWidth = 2;
     backLayer.lineCap = @"round";
     backLayer.lineJoin = @"round";
     backLayer.path = [path CGPath];
