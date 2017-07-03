@@ -46,7 +46,7 @@
     CGFloat lineHeight = 3;
     CGFloat width = CGRectGetWidth(self.frame);
     CGFloat radius = (width - 2 * space) * 0.16;
-    CGFloat controlPointY = 3.2;
+    CGFloat controlPointY = 3.3;
     CGFloat startAngle = M_PI * 0.2;
     CGFloat endAngle = M_PI - startAngle;
     
@@ -100,22 +100,24 @@
     }
     // 路径
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(width * 0.5, lineHeight) radius: radius startAngle:startAngle endAngle:endAngle clockwise:YES];
-    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.25 + space, lineHeight) controlPoint:CGPointMake(width * 0.32, controlPointY)];
+    [path addQuadCurveToPoint:CGPointMake((width - 2 * space) * 0.2 + space, lineHeight) controlPoint:CGPointMake(width * 0.3, controlPointY)];
     [path addLineToPoint:CGPointMake(space, lineHeight)];
     [path addLineToPoint:CGPointMake(space, 0)];
     [path addLineToPoint:CGPointMake(width - space, 0)];
     [path addLineToPoint:CGPointMake(width - space, lineHeight)];
-    [path addLineToPoint:CGPointMake( width - (width - 2 * space) * 0.25 - space, lineHeight)];
+    [path addLineToPoint:CGPointMake( width - (width - 2 * space) * 0.2 - space, lineHeight)];
     double endX = cos(startAngle) * radius + (width * 0.5);
     double endY = sin(startAngle) * radius + lineHeight;
-    [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.68, controlPointY)];
+    [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.7, controlPointY)];
     
     // 绘制路径图层
     CAShapeLayer *backLayer = [CAShapeLayer layer];
     backLayer.frame = self.bounds;
     backLayer.fillColor =  overalColor.CGColor;
     backLayer.strokeColor  = overalColor.CGColor;
-    backLayer.lineWidth = 1;
+    backLayer.lineWidth = 2;
+    backLayer.lineCap = @"round";
+    backLayer.lineJoin = @"round";
     backLayer.path = [path CGPath];
 //    backLayer.strokeEnd = 5;
     [self.layer addSublayer:backLayer];
