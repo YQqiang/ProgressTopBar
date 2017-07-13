@@ -184,7 +184,7 @@
     titleBtnCenter.x = self.center.x - 5;
     titleBtnCenter.y = lineHeight + 5;
     self.titleBtn.center = CGPointMake(width * 0.5, lineHeight + 3);
-    if (self.processState == ProcessedLeading || self.processState == ProcessedMiddle || self.processState == ProcessedTrialing || self.processState == ProcessLastDone) {
+    if (self.processState == ProcessedLeading || self.processState == ProcessedMiddle || self.processState == ProcessedTrialing || self.processState == ProcessLastDone || self.processState == ProcessFirtDone) {
         // 已完成的步骤显示√
         UIBezierPath *gouPath = [UIBezierPath bezierPath];
         [gouPath moveToPoint:CGPointMake(12, CGRectGetHeight(self.titleBtn.frame) * 0.5 + 0)];
