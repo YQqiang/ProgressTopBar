@@ -13,6 +13,7 @@
 @interface CreatePlantProgressItme()
 
 @property (nonatomic, strong) UIButton *titleBtn;
+@property (nonatomic, assign, getter=isSelected) BOOL selected;
 
 @end
 
@@ -26,10 +27,11 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame processState:(ProcessState)processState processValue:(NSString *)processValue {
+- (instancetype)initWithFrame:(CGRect)frame processState:(ProcessState)processState processValue:(NSString *)processValue  selected:(BOOL)isSelected{
     if (self = [super initWithFrame:frame]) {
         self.processState = processState;
         self.processValue = processValue;
+        self.selected = isSelected;
         [self createUI];
     }
     return self;
@@ -128,17 +130,17 @@
     double endX = cos(startAngle) * radius + (width * 0.5);
     double endY = sin(startAngle) * radius + lineHeight;
     [path addQuadCurveToPoint:CGPointMake(endX, endY) controlPoint:CGPointMake(width * 0.7, controlPointY)];
-//    path.lineWidth = 10;
+    //    path.lineWidth = 10;
     // 绘制路径图层
     CAShapeLayer *backLayer = [CAShapeLayer layer];
     backLayer.frame = self.bounds;
     backLayer.fillColor =  overalColor.CGColor;
     backLayer.strokeColor  = overalColor.CGColor;
-//    backLayer.lineWidth = 2;
+    //    backLayer.lineWidth = 2;
     backLayer.lineCap = @"round";
     backLayer.lineJoin = @"round";
     backLayer.path = [path CGPath];
-//    backLayer.strokeEnd = 5;
+    //    backLayer.strokeEnd = 5;
     [self.layer addSublayer:backLayer];
     
     // 颜色渐变
@@ -167,16 +169,21 @@
     [gradientLayer setMask:backLayer];
     
     // 黄色圆圈(标识正在处理)
-    if (self.processState == ProcessingTrialing || self.processState == ProcessingMiddle || self.processState == ProcessingLeading || self.processState == ProcessLastDone || self.processState == ProcessFirtDoing) {
+    if (self.isSelected) {
         CGFloat cycleRadius = 3;
         UIView *cycleView = [[UIView alloc] init];
-        cycleView.backgroundColor = RGB(247, 141, 97);
+        cycleView.backgroundColor = RGB(0, 158, 238);
         [self addSubview:cycleView];
         cycleView.frame = CGRectMake(width * 0.5 - cycleRadius, lineHeight + radius + cycleRadius, cycleRadius * 2, cycleRadius * 2);
         cycleView.layer.cornerRadius = cycleRadius;
+        
+        if (self.processState == ProcessingTrialing || self.processState == ProcessingMiddle || self.processState == ProcessingLeading || self.processState == ProcessLastDone || self.processState == ProcessFirtDoing) {
+            cycleView.backgroundColor = RGB(247, 141, 97);
+        }
     }
     
     self.titleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.titleBtn.userInteractionEnabled = NO;
     self.titleBtn.titleLabel.font = [UIFont systemFontOfSize:8];
     [self addSubview:self.titleBtn];
     [self.titleBtn sizeToFit];

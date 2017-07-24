@@ -27,6 +27,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) ProcessState processState;
 @property (nonatomic, copy) NSString *processValue;
 
-- (instancetype)initWithFrame:(CGRect)frame processState:(ProcessState)processState processValue:(NSString *)processValue;
+- (instancetype)initWithFrame:(CGRect)frame processState:(ProcessState)processState processValue:(NSString *)processValue selected:(BOOL)isSelected;
 
 @end

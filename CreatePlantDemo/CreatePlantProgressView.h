@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class CreatePlantProgressView;
 
 typedef enum : NSUInteger {
     ProgressTypeWith20 = 0,
@@ -16,10 +17,20 @@ typedef enum : NSUInteger {
     ProgressTypeWith100
 } ProgressValueType;
 
+@protocol CreatePlantProgressViewDelegate
+@optional
+- (void)createPlantProgressView:(CreatePlantProgressView *)progressView ProgressValueType:(ProgressValueType)progressValueType;
+
+@end
+
 @interface CreatePlantProgressView : UIView
 
-@property (nonatomic, assign) ProgressValueType progressValueType;
+@property (nonatomic, weak) id delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame progressValueType:(ProgressValueType)progressValueType;
+@property (nonatomic, assign) ProgressValueType progressValueType;
+@property (nonatomic, assign) NSInteger selectIndex;
+
+- (instancetype)initWithFrame:(CGRect)frame progressValueType:(ProgressValueType)progressValueType selectedIndex:(NSInteger)selectedIndex;
+
 
 @end
